@@ -11,7 +11,7 @@ export class parseCars1627569988778 implements MigrationInterface {
         NO MAXVALUE
         CACHE 1;
       CREATE TABLE public.parse_cars (
-        id integer NOT NULL,
+        id integer NOT NULL DEFAULT nextval('"parse_cars_id_seq"'::regclass),
         site_id integer NOT NULL,
         url text NOT NULL,
         price integer NOT NULL,
