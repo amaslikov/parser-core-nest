@@ -1,6 +1,9 @@
+import dotenv = require('dotenv');
 import { ConnectionOptions } from 'typeorm';
-import { config as commonConfig } from './configuration';
-const { db } = commonConfig;
+import configuration from './configuration';
+
+dotenv.config();
+const { db } = configuration();
 // You can load you .env file here synchronously using dotenv package (not installed here),
 // import * as dotenv from 'dotenv';
 // import * as fs from 'fs';
