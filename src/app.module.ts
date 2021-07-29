@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
+import { ParseCarsModule } from './parse-cars/parse-cars.module';
 import env = require('../env.js');
 import * as ormconfig from './config/ormconfig';
 
@@ -21,6 +22,7 @@ export function DatabaseOrmModule(): DynamicModule {
     }),
     TypeOrmModule.forRoot(ormconfig),
     UsersModule,
+    ParseCarsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
