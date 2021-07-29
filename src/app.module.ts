@@ -1,8 +1,10 @@
 import { DynamicModule, Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import configuration from './config/configuration';
 import * as ormconfig from './config/ormconfig';
 
 export function DatabaseOrmModule(): DynamicModule {
@@ -13,7 +15,13 @@ export function DatabaseOrmModule(): DynamicModule {
 }
 
 @Module({
-  imports: [TypeOrmModule.forRoot(ormconfig), UsersModule],
+  imports: [
+    ConfigModule.forRoot({
+      load: [configuration],
+    }),
+    TypeOrmModule.forRoot(ormconfig),
+    UsersModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

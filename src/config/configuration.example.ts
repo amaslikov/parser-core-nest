@@ -1,11 +1,13 @@
 export const config = {
+  host: 'localhost',
+  port: 3000,
   db: {
-    type: 'postgres',
+    // type: 'postgres', // not uses
     host: 'localhost',
     port: 5432,
-    username: 'postgres',
-    password: '123',
-    database: 'parser_nestjs_db',
+    username: 'user_db',
+    password: 'secret',
+    database: 'name_db',
   },
 };
 
