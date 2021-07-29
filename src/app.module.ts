@@ -4,7 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
-import configuration from './config/configuration';
+import env = require('../env.js');
 import * as ormconfig from './config/ormconfig';
 
 export function DatabaseOrmModule(): DynamicModule {
@@ -17,7 +17,7 @@ export function DatabaseOrmModule(): DynamicModule {
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [configuration],
+      load: [env],
     }),
     TypeOrmModule.forRoot(ormconfig),
     UsersModule,
