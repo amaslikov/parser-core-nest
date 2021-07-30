@@ -24,30 +24,6 @@ export class ParseCarsService {
     });
   }
 
-  // @PrimaryColumn()
-  // id: number;
-  //
-  // @Column()
-  // site_id: number;
-  //
-  // @Column()
-  // url: string;
-  //
-  // @Column()
-  // price: number;
-  //
-  // @Column()
-  // year: number;
-  //
-  // @Column()
-  // name: string;
-  //
-  // @Column()
-  // created_at: Date;
-  //
-  // @Column()
-  // updated_at: Date;
-
   findAll() {
     return this.parseCarRepository.find();
   }
