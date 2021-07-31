@@ -1,4 +1,4 @@
-import env = require('../../../../env');
+import env = require('../../../../../env');
 
 const { jwtSecret } = env();
 
