@@ -37,8 +37,8 @@ export class AuthService {
       id: Joi.number().required(),
     }),
   )
-  async userEnriched(userPoor) {
-    const user = await this.usersRepository.findOne(userPoor.id);
+  async userEnriched({ id }) {
+    const user = await this.usersRepository.findOne(id);
     const { password, ...result } = user;
     password;
     return result;
