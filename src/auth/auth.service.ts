@@ -13,14 +13,7 @@ export class AuthService {
     private usersRepository: Repository<User>,
   ) {}
 
-  async enrichedUser(userId) {
-    const user = await this.usersRepository.findOne(userId);
-    const { password, ...result } = user;
-    password;
-    return result;
-  }
-
-  async validateUser(username: string, pass: string): Promise<any> {
+  private async validateUser(username: string, pass: string): Promise<any> {
     const user = await this.usersRepository.findOne({
       select: ['id', 'username', 'password'],
       where: { username },
@@ -32,6 +25,13 @@ export class AuthService {
     if (!isValidPass) {
       throw new UnauthorizedException();
     }
+    const { password, ...result } = user;
+    password;
+    return result;
+  }
+
+  async enrichedUser(userId) {
+    const user = await this.usersRepository.findOne(userId);
     const { password, ...result } = user;
     password;
     return result;
