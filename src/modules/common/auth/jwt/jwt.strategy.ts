@@ -16,6 +16,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   // add user to request
   async validate(payload: any) {
-    return this.authService.enrichedUser(parseInt(payload.sub));
+    return this.authService.userEnriched({
+      id: parseInt(payload.sub),
+    });
   }
 }

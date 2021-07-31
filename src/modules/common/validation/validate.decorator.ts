@@ -12,7 +12,8 @@ export const ValidateMethod = (schema: ObjectSchema) => {
     propertyDesciptor.value = function (params: any) {
       const { error } = schema.validate(params, { abortEarly: false });
       if (error) {
-        throw new BadRequestException(error.details);
+        const err = [...error.details, { propertyName }];
+        throw new BadRequestException(err);
       }
       return method.apply(this, [params]);
     };
