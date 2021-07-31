@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { ParseCarsModule } from './parse-cars/parse-cars.module';
 import { MusicsModule } from './musics/musics.module';
+import { AuthModule } from './auth/auth.module';
 import env = require('../env.js');
 import * as ormconfig from './config/ormconfig';
 
@@ -25,6 +26,7 @@ export function DatabaseOrmModule(): DynamicModule {
     UsersModule,
     ParseCarsModule,
     MusicsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
