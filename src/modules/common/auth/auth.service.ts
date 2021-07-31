@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { ValidateMethod } from '../validation/validate.decorator';
+import * as Joi from 'joi';
 
 @Injectable()
 export class AuthService {
@@ -38,7 +39,12 @@ export class AuthService {
     return result;
   }
 
-  @ValidateMethod()
+  @ValidateMethod(
+    Joi.object({
+      username: Joi.string().min(3).required(),
+      password: Joi.string().min(6).required(),
+    }),
+  )
   async login({ username, password }) {
     const validUser = await this.validateUser(username, password);
     const payload = { username: validUser.username, sub: validUser.id };

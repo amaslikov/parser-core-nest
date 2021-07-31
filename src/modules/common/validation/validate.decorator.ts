@@ -1,4 +1,7 @@
-export const ValidateMethod = () => {
+import { ObjectSchema } from 'joi';
+import { BadRequestException } from '@nestjs/common';
+
+export const ValidateMethod = (schema: ObjectSchema) => {
   return function (
     target: unknown,
     propertyName: string,
@@ -6,14 +9,12 @@ export const ValidateMethod = () => {
   ) {
     const method = propertyDesciptor.value;
 
-    propertyDesciptor.value = function (...args: any[]) {
-      // invoke greet() and get its return value
-      const result = method.apply(this, args);
-
-      console.log('Validate', { args, method, result });
-
-      // return the result of invoking the method
-      return result;
+    propertyDesciptor.value = function (params: any) {
+      const { error } = schema.validate(params, { abortEarly: false });
+      if (error) {
+        throw new BadRequestException(error.details);
+      }
+      return method.apply(this, [params]);
     };
   };
 };
