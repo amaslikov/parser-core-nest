@@ -1,5 +1,5 @@
 import { ObjectSchema } from 'joi';
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, HttpStatus } from '@nestjs/common';
 
 export const ValidateMethod = (schema: ObjectSchema) => {
   return function (
@@ -12,7 +12,12 @@ export const ValidateMethod = (schema: ObjectSchema) => {
     propertyDesciptor.value = function (params: any) {
       const { error } = schema.validate(params, { abortEarly: false });
       if (error) {
-        const err = [...error.details, { propertyName }];
+        const err = {
+          statusCode: HttpStatus.BAD_REQUEST,
+          message: error.details,
+          propertyName,
+          error: 'Bad Request',
+        };
         throw new BadRequestException(err);
       }
       return method.apply(this, [params]);
