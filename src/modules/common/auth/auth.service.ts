@@ -4,6 +4,7 @@ import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
+import { ValidateMethod } from '../validation/validate.decorator';
 
 @Injectable()
 export class AuthService {
@@ -37,7 +38,8 @@ export class AuthService {
     return result;
   }
 
-  async login(username, password) {
+  @ValidateMethod()
+  async login({ username, password }) {
     const validUser = await this.validateUser(username, password);
     const payload = { username: validUser.username, sub: validUser.id };
     return {

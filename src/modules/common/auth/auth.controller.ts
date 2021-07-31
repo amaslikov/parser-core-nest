@@ -10,6 +10,6 @@ export class AuthController {
   @Post('login')
   async login(@Body() user) {
     const { username, password } = user;
-    return this.authService.login(username, password);
+    return this.authService.login({ username, password });
   }
 }

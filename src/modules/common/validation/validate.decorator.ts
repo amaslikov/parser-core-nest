@@ -1,4 +1,4 @@
-export const Validate = () => {
+export const ValidateMethod = () => {
   return function (
     target: unknown,
     propertyName: string,
@@ -10,7 +10,7 @@ export const Validate = () => {
       // invoke greet() and get its return value
       const result = method.apply(this, args);
 
-      console.log('Validate', { method, result });
+      console.log('Validate', { args, method, result });
 
       // return the result of invoking the method
       return result;
