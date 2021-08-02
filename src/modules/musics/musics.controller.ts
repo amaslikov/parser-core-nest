@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  Res,
   Post,
   Body,
   Patch,
@@ -9,11 +10,14 @@ import {
   Delete,
   UploadedFile,
   UseInterceptors,
+  Query,
 } from '@nestjs/common';
 import { MusicsService } from './musics.service';
 import { CreateMusicDto } from './dto/create-music.dto';
 import { UpdateMusicDto } from './dto/update-music.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { Response } from 'express';
+import { createReadStream } from 'fs';
 
 @Controller('musics')
 export class MusicsController {
@@ -34,9 +38,23 @@ export class MusicsController {
     return this.musicsService.findAll();
   }
 
+  @Get('file')
+  async getFile(
+    @Request() { user },
+    @Query('filepath') filepath: string,
+    @Res() res: Response,
+  ) {
+    const filePath = await this.musicsService.getFilePathAbs({
+      user,
+      filepath,
+    });
+    const stream = createReadStream(filePath);
+    stream.pipe(res);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.musicsService.findOne(+id);
+    return this.musicsService.findOne({ id });
   }
 
   @Patch(':id')

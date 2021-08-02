@@ -27,7 +27,7 @@ export class MusicsService {
         buffer: Joi.binary().required(),
         mimetype: Joi.string().required(),
       }).required(),
-      filename: Joi.string().min(6).required(),
+      filename: Joi.string().min(2).required(),
     }).options({ allowUnknown: true }),
   )
   async create({ user, file, filename }) {
@@ -63,8 +63,25 @@ export class MusicsService {
     return this.musicRepository.find();
   }
 
-  findOne(id: number) {
+  @ValidateMethod(
+    Joi.object({
+      id: Joi.number().required(),
+    }),
+  )
+  findOne({ id }) {
     return this.musicRepository.findOne(id);
+  }
+
+  @ValidateMethod(
+    Joi.object({
+      user: Joi.object({
+        id: Joi.number().required(),
+      }).required(),
+      filepath: Joi.string().min(6).required(),
+    }).options({ allowUnknown: true }),
+  )
+  getFilePathAbs({ user, filepath }) {
+    return `${process.cwd()}/upload/${user.id}/${filepath}`;
   }
 
   update(id: number, updateMusicDto: UpdateMusicDto) {
