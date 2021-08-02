@@ -89,6 +89,6 @@ export class MusicsService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} music`;
+    return `This action removes a #${id} music test`;
   }
 }
