@@ -64,7 +64,7 @@ export class MusicsService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} music`;
+    return this.musicRepository.findOne(id);
   }
 
   update(id: number, updateMusicDto: UpdateMusicDto) {
